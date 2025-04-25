@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Menu Item Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!isLoading && item">
+  <ion-card class="custom-card">
+    <img [src]="item.imageUrl || 'https://placehold.co/400x300?text=No+Image'"
+         alt="{{ item.name }}" class="detail-image" />
+
+    <ion-card-header>
+      <ion-card-title>{{ item.name }}</ion-card-title>
+      <ion-card-subtitle>Category: {{ item.category }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>{{ item.description }}</p>
+      <p><strong>Price:</strong> \${{ item.price.toFixed(2) }}</p>
+      <p><strong>Available:</strong> {{ item.available ? 'Yes' : 'No' }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Action Buttons -->
+  <ion-footer class="ion-padding">
+    <ion-button expand="block" color="primary" (click)="edit()">
+      <ion-icon name="create" slot="start"></ion-icon> Edit
+    </ion-button>
+    <ion-button expand="block" color="danger" (click)="confirmDelete()">
+      <ion-icon name="trash" slot="start"></ion-icon> Delete
+    </ion-button>
+  </ion-footer>
+</ion-content>
+
+<!-- Loading State -->
+<ion-spinner *ngIf="isLoading" class="ion-padding"></ion-spinner>
+
+<!-- Error State -->
+<ion-text *ngIf="error" color="danger">
+  <p class="ion-padding">{{ error }}</p>
+</ion-text>
+
+<style>
+  .custom-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  .detail-image {
+    width: 100%;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+  }
+  ion-card-title {
+    font-size: 1.4rem;
+  }
+  ion-card-content p {
+    margin-bottom: 0.5rem;
+  }
+</style>

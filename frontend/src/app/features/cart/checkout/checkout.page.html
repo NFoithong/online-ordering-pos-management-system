@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="cartItems.length > 0">
+  <ion-list>
+    <ion-item *ngFor="let cart of cartItems">
+      <ion-thumbnail slot="start">
+        <img [src]="cart.item.imageUrl || 'https://placehold.co/400x300?text=No+Image'" alt="{{ cart.item.name }}">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ cart.item.name }}</h2>
+        <p>Quantity: {{ cart.quantity }}</p>
+        <p>Subtotal: ${{ (cart.item.price * cart.quantity).toFixed(2) }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Order Summary</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <h3>Total: ${{ total.toFixed(2) }}</h3>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Delivery Address</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Address</ion-label>
+        <ion-textarea [(ngModel)]="address"></ion-textarea>
+      </ion-item>
+      <ion-button expand="block" (click)="getCurrentLocation()">Use Current Location</ion-button>
+    </ion-card-content>
+  </ion-card>
+  
+
+  <!-- Stripe Elements Card Form -->
+  <div *ngIf="clientSecret" class="ion-padding">
+    <h4>Payment Details</h4>
+    <div id="card-element" style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;"></div>
+  </div>
+
+  <!-- Pay Now Button -->
+  <ion-button expand="full" color="primary" [disabled]="!clientSecret" (click)="confirmPayment()">Pay Now</ion-button>
+</ion-content>
+
+<ion-content *ngIf="cartItems.length === 0">
+  <ion-text color="medium">
+    <p class="ion-padding">Your cart is empty.</p>
+  </ion-text>
+</ion-content>

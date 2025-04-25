@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{ isEdit ? 'Edit Menu Item' : 'New Menu Item' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form formGroup="form" (ngSubmit)="submit()">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input formControlName="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Description</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Price</ion-label>
+        <ion-input type="number" formControlName="price"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Category</ion-label>
+        <ion-input formControlName="category" placeholder="e.g. Pizza"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Available</ion-label>
+        <ion-toggle formControlName="available"></ion-toggle>
+      </ion-item>
+
+      <!-- Image URL Input -->
+      <ion-item>
+        <ion-label position="stacked">Image URL</ion-label>
+        <ion-input formControlName="imageUrl"></ion-input>
+      </ion-item>
+
+      <!-- Image Preview -->
+      <ion-item *ngIf="form.value.imageUrl">
+        <img [src]="form.value.imageUrl" style="width:100%;max-height:200px;object-fit:cover" alt="Image Preview"/>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="full" type="submit" [disabled]="form.invalid">
+      {{ isEdit ? 'Update' : 'Create' }}
+    </ion-button>
+
+    <ion-button *ngIf="isEdit" color="danger" expand="full" (click)="delete()">
+      Delete
+    </ion-button>
+  </form>
+</ion-content>
