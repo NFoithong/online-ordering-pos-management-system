@@ -1,0 +1,23 @@
+<!-- src/app/features/pos/dashboard/dashboard.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>POS Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let order of orders">
+      <ion-label>
+        <h2>Order #{{ order.id }}</h2>
+        <p>Total: ${{ order.total.toFixed(2) }}</p>
+        <p>Status: {{ order.status }}</p>
+        <p>Date: {{ order.createdAt | date:'short' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-text *ngIf="orders.length === 0" color="medium">
+    <p class="ion-padding">No orders yet.</p>
+  </ion-text>
+</ion-content>
